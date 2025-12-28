@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./login/style.css" />
+    <title>Cryptoonchainpro.com - Sign in / Sign up Form</title>
+
+    <link rel="shortcut icon" href="./login/Img/Logo.jpg" type="image/svg+xml">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <script>
+
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'stock-green': '#16a34a',
+            'stock-red': '#dc2626',
+            'stock-blue': '#2563eb',
+          },
+        },
+      },
+    };
+  </script>
+
+  </head>
+  <body>
+
+      <!-- Header -->
+  <header class="header-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <img src="./login/img/Logo.jpg" width="50" height="50" alt="">
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            Cryptoonchainpro.com
+          </h1>
+        </div>
+        <a href="index.html" class="text-blue-400 hover:text-blue-300">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Home page
+        </a>
+      </div>
+    </div>
+  </header>
+
+    <div class="container">
+      <div class="forms-container">
+        <div class="signin-signup">
+          <form action="#" class="sign-in-form">
+            <h2 class="title text-white">Sign in</h2>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Username" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Password" />
+            </div>
+            <input type="submit" value="Login" class="btn solid" />
+            <p class="social-text">Forgot Password?</p>
+            
+          </form>
+          <form action="#" class="sign-up-form">
+            <h2 class="title text-white">Sign up</h2>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Username" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="Email" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Password" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="confirm password" placeholder="Confirm Password" />
+            </div>
+            <input type="submit" class="btn" value="Sign up" />
+            <p class="social-text">I have read and agree to Tokencan's privacy policy</p>
+            
+          </form>
+        </div>
+      </div>
+
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>Welcome to Cryptoonchainpro</h3>
+            <p>
+              
+              Login now and start trading
+            </p>
+            <button class="btn transparent" id="sign-up-btn">
+              Sign up
+            </button>
+          </div>
+          <img src="./login/Img/login.svg.png" class="image" alt="" />
+        </div>
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>Welcome to Cryptoonchainpro</h3>
+            <p>
+              
+              Login now and start trading
+            </p>
+            <button class="btn transparent" id="sign-in-btn">
+              Sign in
+            </button>
+          </div>
+          <img src="./login/Img/reg.svg.png" class="image" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <script src="./login/app.js"></script>
+  </body>
+</html>

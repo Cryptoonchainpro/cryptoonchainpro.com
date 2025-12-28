@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Cryptoonchainpro.com</title>
+  <link rel="shortcut icon" href="./img/Logo.jpg" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'stock-green': '#10B981',
+            'stock-red': '#EF4444',
+            'dark-green': '#065f46',
+            'dark-red': '#7f1d1d'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .header-bg {
+      background: linear-gradient(90deg, #1e3a8a, #0f172a);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .dollar-sign::before {
+      content: "$";
+    }
+    .btn-trade {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-checkout {
+      background-color: #3b82f6;
+      color: white;
+    }
+    .btn-checkout:hover {
+      background-color: #2563eb;
+    }
+    .btn-back {
+      background-color: #6b7280;
+      color: white;
+    }
+    .btn-back:hover {
+      background-color: #4b5563;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen">
+  <!-- Header -->
+  <header class="header-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <img src="img/Logo.jpg" width="50" height="50" alt="">
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            Cryptoonchainpro.com — Invest with Confidence
+          </h1>
+        </div>
+        <a href="trade.html" class="text-blue-400 hover:text-blue-300">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Trade
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h2 class="text-3xl font-bold text-center mb-8">Checkout</h2>
+    
+    <div class="bg-gradient-to-r from-emerald-900/30 to-teal-900/30 backdrop-blur-sm rounded-xl p-6 mb-8 border border-emerald-500/30">
+      <div class="mb-6 p-4 bg-slate-800/50 rounded-lg">
+        <div class="flex justify-between mb-2">
+          <span id="orderDetails">RELIANCE (10 shares)</span>
+          <span id="orderCost">$27,860.00</span>
+        </div>
+        <div class="flex justify-between mb-2">
+          <span>Brokerage</span>
+          <span>$10.00</span>
+        </div>
+        <div class="flex justify-between mb-2">
+          <span>STT (0.025%)</span>
+          <span>$6.97</span>
+        </div>
+        <div class="flex justify-between mb-2">
+          <span>Transaction Charges</span>
+          <span>$2.79</span>
+        </div>
+        <div class="flex justify-between mb-2">
+          <span>SEBI Charges</span>
+          <span>$0.28</span>
+        </div>
+        <div class="flex justify-between mt-4 pt-4 border-t border-slate-600">
+          <span class="font-bold">Total Amount</span>
+          <span class="font-bold" id="totalAmount">$27,880.04</span>
+        </div>
+      </div>
+      
+      <a href="payment.html" id="proceedToPaymentBtn" class="btn-trade btn-checkout">Proceed to Payment</a>
+    </div>
+  </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const symbol = urlParams.get('symbol') || 'RELIANCE';
+    const quantity = urlParams.get('quantity') || '10';
+    const tradeType = urlParams.get('type') || 'buy';
+    const price = parseFloat(urlParams.get('price') || '2786.00');
+    
+    // Update order details
+    document.getElementById('orderDetails').textContent = `${symbol} (${quantity} shares)`;
+    document.getElementById('orderCost').textContent = `₹${(quantity * price).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+    
+    // Calculate total
+    const brokerage = 10.00;
+    const stt = (quantity * price) * 0.00025;
+    const transactionCharges = 2.79;
+    const sebiCharges = 0.28;
+    const total = (quantity * price) + brokerage + stt + transactionCharges + sebiCharges;
+    
+    document.getElementById('totalAmount').textContent = `₹${total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+  </script>
+</body>
+</html>

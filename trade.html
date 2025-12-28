@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade - Cryptoonchainpro.com</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'stock-green': '#10B981',
+            'stock-red': '#EF4444',
+            'dark-green': '#065f46',
+            'dark-red': '#7f1d1d'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .header-bg {
+      background: linear-gradient(90deg, #1e3a8a, #0f172a);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .dollar-sign::before {
+      content: "$";
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #9ca3af;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(30, 58, 138, 0.3);
+      border: 1px solid #374151;
+      border-radius: 0.5rem;
+      color: white;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+    .btn-trade {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-buy {
+      background-color: #10B981;
+      color: white;
+    }
+    .btn-buy:hover {
+      background-color: #059669;
+    }
+    .btn-sell {
+      background-color: #EF4444;
+      color: white;
+    }
+    .btn-sell:hover {
+      background-color: #dc2626;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen"></body>
+
+  <!-- Header -->
+  <header class="header-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <img src="img/Logo.jpg" width="50" height="50" alt="">
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            Cryptoonchainpro.com — Invest with Confidence
+          </h1>
+        </div>
+        <a href="checkout.html" class="text-blue-400 hover:text-blue-300">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Home Page
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Stock Info Card -->
+    <div class="bg-gradient-to-r from-blue-900/50 to-indigo-900/50 backdrop-blur-sm rounded-xl p-6 mb-8 border border-blue-500/30">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h2 class="text-2xl font-bold" id="stockName">RELIANCE</h2>
+          <p class="text-gray-300" id="stockSymbol">NSE: RELIANCE</p>
+          <p class="text-gray-400 mt-1" id="stockSector">Energy</p>
+        </div>
+        <div class="mt-4 lg:mt-0 text-right">
+          <div class="flex items-center justify-end space-x-4">
+            <div class="text-right">
+              <div class="text-3xl font-bold dollar-sign" id="stockPrice">2,785.60</div>
+              <div class="flex items-center justify-end mt-1 text-stock-green" id="stockChange">
+                <i class="fas fa-arrow-up mr-1"></i>
+                <span>+32.40 (+1.18%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trading Form -->
+    <div class="bg-gradient-to-r from-emerald-900/30 to-teal-900/30 backdrop-blur-sm rounded-xl p-6 mb-8 border border-emerald-500/30">
+      <h2 class="text-2xl font-bold mb-6 text-center" id="tradeTitle">Buy RELIANCE</h2>
+      
+      <div class="form-group">
+        <label class="form-label">Quantity</label>
+        <input type="number" id="quantity" class="form-input" min="1" value="10">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Order Type</label>
+        <select id="orderType" class="form-input">
+          <option value="market">Market Order</option>
+          <option value="limit">Limit Order</option>
+          <option value="stop">Stop Loss Order</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Transaction Type</label>
+        <select id="transactionType" class="form-input">
+          <option value="intraday">Intraday</option>
+          <option value="delivery">Delivery</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Price</label>
+        <input type="text" id="orderPrice" class="form-input" value="2,786.00" readonly>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Estimated Cost</label>
+        <input type="text" id="estimatedCost" class="form-input" value="$27,860.00" readonly>
+      </div>
+      
+      <a href="checkout.html?symbol=RELIANCE&quantity=10&type=buy&price=2786.00" id="placeOrderBtn" class="btn-trade btn-buy">Place Order</a>
+    </div>
+  </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const symbol = urlParams.get('symbol') || 'RELIANCE';
+    const tradeType = urlParams.get('type') || 'buy';
+
+    // Mock stock data for display
+    const stockData = {
+      RELIANCE: { name: "RELIANCE", price: 2785.60, change: 32.40, changePercent: 1.18, open: 2753.20, high: 2795.40, low: 2748.10, volume: "3.2M", sector: "Energy", ceo: "Mukesh Ambani" },
+      TCS: { name: "Tata Consultancy Services", price: 3850.25, change: -15.30, changePercent: -0.40, open: 3865.55, high: 3872.10, low: 3842.80, volume: "2.1M", sector: "IT Services", ceo: "Rajesh Gopinathan" },
+      HDFCBANK: { name: "HDFC Bank", price: 1645.75, change: 11.45, changePercent: 0.70, open: 1634.30, high: 1652.40, low: 1630.15, volume: "1.9M", sector: "Banking", ceo: "Sashidhar Jagdishan" },
+      INFY: { name: "Infosys", price: 1520.45, change: -4.55, changePercent: -0.30, open: 1525.00, high: 1532.80, low: 1518.20, volume: "1.7M", sector: "IT Services", ceo: "Salil Parekh" },
+      ICICIBANK: { name: "ICICI Bank", price: 1025.30, change: 18.25, changePercent: 1.81, open: 1007.05, high: 1028.75, low: 1005.40, volume: "2.5M", sector: "Banking", ceo: "Sandip Bakhai" },
+      BAJFINANCE: { name: "Bajaj Finance", price: 7245.80, change: -65.20, changePercent: -0.89, open: 7311.00, high: 7325.45, low: 7235.20, volume: "0.8M", sector: "Financial Services", ceo: "Sanjeev Jain" },
+      ITC: { name: "ITC Limited", price: 458.25, change: 2.30, changePercent: 0.50, open: 455.95, high: 460.80, low: 454.60, volume: "4.2M", sector: "FMCG", ceo: "Sanjiv Puri" },
+      AXISBANK: { name: "Axis Bank", price: 1125.40, change: 12.35, changePercent: 1.11, open: 1113.05, high: 1128.75, low: 1110.20, volume: "1.8M", sector: "Banking", ceo: "Amitabh Chaudhry" },
+      SBIN: { name: "State Bank of India", price: 520.45, change: 4.15, changePercent: 0.80, open: 516.30, high: 522.10, low: 515.80, volume: "5.1M", sector: "Banking", ceo: "Dinesh Kumar Khara" },
+      LT: { name: "Larsen & Toubro", price: 2185.70, change: -12.30, changePercent: -0.56, open: 2198.00, high: 2205.50, low: 2180.20, volume: "0.9M", sector: "Engineering", ceo: "S.N. Subrahmanyan" },
+      ASIANPAINT: { name: "Asian Paints", price: 2850.30, change: 39.20, changePercent: 1.40, open: 2811.10, high: 2855.40, low: 2805.70, volume: "0.4M", sector: "Consumer Goods", ceo: "Amit Syngle" },
+      MARUTI: { name: "Maruti Suzuki", price: 8250.20, change: -16.50, changePercent: -0.20, open: 8266.70, high: 8285.00, low: 8230.10, volume: "0.6M", sector: "Automobile", ceo: "Kenichi Ayukawa" },
+      SUNPHARMA: { name: "Sun Pharmaceutical", price: 985.60, change: 8.75, changePercent: 0.90, open: 976.85, high: 990.20, low: 972.40, volume: "1.2M", sector: "Pharmaceuticals", ceo: "Dilip Shanghvi" },
+      TITAN: { name: "Titan Company", price: 3250.40, change: 44.80, changePercent: 1.40, open: 3205.60, high: 3260.80, low: 3200.20, volume: "0.3M", sector: "Consumer Goods", ceo: "Bharat D. Nath" },
+      ONGC: { name: "Oil & Natural Gas Corp", price: 152.75, change: -0.75, changePercent: -0.49, open: 153.50, high: 154.20, low: 151.80, volume: "8.5M", sector: "Energy", ceo: "A.K. Gupta" },
+      POWERGRID: { name: "Power Grid Corp", price: 220.30, change: 1.32, changePercent: 0.60, open: 218.98, high: 221.50, low: 218.20, volume: "3.2M", sector: "Utilities", ceo: "Manoj Joshi" }
+    };
+
+    // Update page based on URL parameters
+    const stock = stockData[symbol];
+    document.getElementById('stockName').textContent = stock.name;
+    document.getElementById('stockSymbol').textContent = `NSE: ${symbol}`;
+    document.getElementById('stockSector').textContent = stock.sector;
+    document.getElementById('stockPrice').textContent = stock.price.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    document.getElementById('tradeTitle').textContent = `${tradeType.charAt(0).toUpperCase() + tradeType.slice(1)} ${symbol}`;
+    
+    // Calculate buy/sell prices
+    const price = tradeType === 'buy' ? stock.price + 0.40 : stock.price - 0.40;
+    document.getElementById('orderPrice').value = price.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    
+    // Update estimated cost
+    const quantity = parseInt(document.getElementById('quantity').value) || 0;
+    const cost = (quantity * price).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    document.getElementById('estimatedCost').value = `$${cost}`;
+    
+    // Update button link
+    document.getElementById('placeOrderBtn').href = `checkout.html?symbol=${symbol}&quantity=${quantity}&type=${tradeType}&price=${price}`;
+    
+    // Update quantity input listener
+    document.getElementById('quantity').addEventListener('input', function() {
+      const qty = parseInt(this.value) || 0;
+      const estCost = (qty * price).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+      document.getElementById('estimatedCost').value = `₹${estCost}`;
+      document.getElementById('placeOrderBtn').href = `checkout.html?symbol=${symbol}&quantity=${qty}&type=${tradeType}&price=${price}`;
+    });
+  </script>
+</body>
+</html>

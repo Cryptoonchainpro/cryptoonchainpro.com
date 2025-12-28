@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading Platform Dashboard & ER Diagram</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- TradingView Widget Script -->
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  
+  <style>
+    /* Use a monospaced font for a tech/data feel */
+    body {
+      font-family: 'Roboto Mono', monospace;
+    }
+    
+    /* Neon Glow Effect */
+    .glow-border {
+      box-shadow: 
+        0 0 10px rgba(34, 211, 238, 0.5), /* Soft inner cyan glow */
+        0 0 20px rgba(34, 211, 238, 0.3), /* Medium outer cyan glow */
+        inset 0 0 5px rgba(255, 255, 255, 0.1); /* Subtle inner highlight */
+      transition: all 0.3s ease;
+    }
+
+    .entity {
+      transition: all 0.3s ease;
+      transform: scale(1);
+    }
+    
+    .entity:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.4);
+      z-index: 10;
+    }
+
+    /* Stylized Connector for visual flow */
+    .diagram-connector {
+      position: absolute;
+      width: 2px;
+      background: linear-gradient(to bottom, #a855f7, #22d3ee); /* Purple to Cyan */
+      animation: pulse 1.5s infinite alternate;
+      border-radius: 1px;
+    }
+
+    /* Horizontal connectors (between Watchlist/Portfolio) */
+    .h-connector {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(to right, #f472b6, #a855f7); /* Pink to Purple */
+      animation: pulse 1.5s infinite alternate;
+      border-radius: 1px;
+    }
+    
+    /* Animation for the connectors */
+    @keyframes pulse {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+    
+    /* Primary Key emphasis */
+    .pk-attr {
+        color: #22d3ee; /* Bright cyan for PK */
+        font-weight: 700;
+        text-shadow: 0 0 5px rgba(34, 211, 238, 0.4);
+    }
+    
+    /* Foreign Key emphasis */
+    .fk-attr {
+        color: #fde047; /* Bright yellow for FK */
+        font-weight: 700;
+    }
+
+    /* Main Grid for Dashboard */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr; /* ERD gets 1 part, Chart gets 2 parts */
+      gap: 2rem;
+      width: 90%;
+      max-width: 1400px;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-black flex flex-col items-center justify-start text-white p-6">
+
+  <!-- Header -->
+  <header class="mb-8 w-full text-center">
+    <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 drop-shadow-[0_0_20px_#22d3ee] tracking-widest">
+      Trading Platform Analysis Dashboard
+    </h1>
+  </header>
+
+  <!-- Dashboard Main Content -->
+  <div class="dashboard-grid h-[700px]">
+    
+    <!-- LEFT COLUMN: ER Diagram (Compact View) -->
+    <div class="flex flex-col items-center p-4 bg-slate-900/50 rounded-xl glow-border border border-slate-700 overflow-y-auto">
+      <h2 class="text-2xl font-bold text-cyan-400 mb-6 sticky top-0 bg-slate-900/90 py-2 w-full text-center z-20 shadow-lg">DATA MODEL (ERD)</h2>
+      
+      <!-- Diagram Container (Adjusted for smaller space) -->
+      <div class="relative flex flex-col items-center space-y-8 w-full max-w-sm mx-auto">
+        
+        <!-- LEVEL 1: USER -->
+        <div id="user" class="entity bg-slate-800/80 border border-cyan-400 glow-border rounded-xl p-3 text-center w-full backdrop-blur-sm shadow-2xl">
+          <h3 class="text-lg font-bold text-cyan-400 mb-2 tracking-wider">USER</h3>
+          <ul class="text-xs space-y-1 text-slate-300 text-left">
+            <li><span class="pk-attr">user_id</span> (PK)</li>
+            <li>name: <span class="text-slate-400">VARCHAR</span></li>
+            <li>wallet_balance: <span class="text-slate-400">DECIMAL</span></li>
+          </ul>
+        </div>
+        
+        <!-- Connector 1 -->
+        <div class="diagram-connector h-8"></div>
+
+        <!-- LEVEL 2: Junctions -->
+        <div class="flex justify-between w-full relative">
+          
+          <!-- Watchlist -->
+          <div id="watchlist" class="entity bg-slate-800/80 border border-indigo-400 rounded-xl p-3 text-center w-[48%] backdrop-blur-sm shadow-xl">
+            <h3 class="text-sm font-bold text-indigo-400 mb-1">WATCHLIST</h3>
+            <ul class="text-xs space-y-1 text-slate-300 text-left">
+              <li><span class="pk-attr">id</span> (PK)</li>
+              <li><span class="fk-attr">user_id</span> (FK)</li>
+              <li><span class="fk-attr">company_id</span> (FK)</li>
+            </ul>
+          </div>
+
+          <!-- Portfolio -->
+          <div id="portfolio" class="entity bg-slate-800/80 border border-pink-400 rounded-xl p-3 text-center w-[48%] backdrop-blur-sm shadow-xl">
+            <h3 class="text-sm font-bold text-pink-400 mb-1">PORTFOLIO</h3>
+            <ul class="text-xs space-y-1 text-slate-300 text-left">
+              <li><span class="pk-attr">id</span> (PK)</li>
+              <li><span class="fk-attr">user_id</span> (FK)</li>
+              <li>quantity_owned: <span class="text-slate-400">INT</span></li>
+            </ul>
+          </div>
+          
+          <!-- Horizontal connector element (stylistic) -->
+          <div class="h-connector w-[40px] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0"></div>
+          <div class="diagram-connector h-8 absolute -top-10 left-1/2 -translate-x-1/2"></div>
+          
+        </div>
+
+        <!-- Connector 2 -->
+        <div class="diagram-connector h-8"></div>
+
+        <!-- LEVEL 3: ORDER -->
+        <div id="order" class="entity bg-slate-800/80 border border-yellow-400 glow-border rounded-xl p-3 text-center w-full backdrop-blur-sm shadow-2xl">
+          <h3 class="text-lg font-bold text-yellow-400 mb-2 tracking-wider">ORDER</h3>
+          <ul class="text-xs space-y-1 text-slate-300 text-left">
+            <li><span class="pk-attr">order_id</span> (PK)</li>
+            <li><span class="fk-attr">user_id</span> (FK)</li>
+            <li><span class="fk-attr">company_id</span> (FK)</li>
+          </ul>
+        </div>
+        
+        <!-- Connector 3 (Split) -->
+        <div class="flex justify-between w-full relative h-10">
+          <div class="h-connector w-full absolute top-1/2 -translate-y-1/2"></div>
+          <div class="diagram-connector h-8 absolute top-0 left-1/4 -translate-x-1/2"></div>
+          <div class="diagram-connector h-8 absolute top-0 right-1/4 translate-x-1/2"></div>
+        </div>
+
+        <!-- LEVEL 4: Details/Target -->
+        <div class="flex justify-between w-full space-x-4">
+          
+          <!-- Payment -->
+          <div id="payment" class="entity bg-slate-800/80 border border-red-400 rounded-xl p-3 text-center w-[48%] backdrop-blur-sm shadow-xl">
+            <h3 class="text-sm font-bold text-red-400 mb-1">PAYMENT</h3>
+            <ul class="text-xs space-y-1 text-slate-300 text-left">
+              <li><span class="pk-attr">id</span> (PK)</li>
+              <li><span class="fk-attr">order_id</span> (FK)</li>
+            </ul>
+          </div>
+          
+          <!-- Company -->
+          <div id="company" class="entity bg-slate-800/80 border border-emerald-400 rounded-xl p-3 text-center w-[48%] backdrop-blur-sm shadow-xl">
+            <h3 class="text-sm font-bold text-emerald-400 mb-1">COMPANY</h3>
+            <ul class="text-xs space-y-1 text-slate-300 text-left">
+              <li><span class="pk-attr">company_id</span> (PK)</li>
+              <li>symbol: <span class="text-slate-400">UNIQUE</span></li>
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: TradingView Chart -->
+    <div class="flex flex-col items-center">
+        <h2 class="text-2xl font-bold text-purple-400 mb-4 w-full text-center">LIVE CHART VIEW (GOOGL)</h2>
+        <!-- TradingView Widget Container -->
+        <div id="tradingview-widget-container" class="w-full h-full rounded-xl overflow-hidden glow-border border border-cyan-700">
+            <!-- The TradingView widget will be injected here by the script -->
+        </div>
+    </div>
+  </div>
+
+  <footer class="mt-8 text-xs text-slate-500">© 2025 Trading Platform Visual | Live Chart powered by TradingView 📈</footer>
+
+  <script>
+    // Initialize TradingView Widget after the DOM is loaded
+    window.onload = function() {
+      // Check if the container exists before initialization
+      if (document.getElementById('tradingview-widget-container')) {
+        new TradingView.widget(
+        {
+          "width": "100%",
+          "height": "100%",
+          "symbol": "NASDAQ:GOOGL",
+          "interval": "D",
+          "timezone": "exchange",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "toolbar_bg": "#1e293b", /* Slate-800 color */
+          "enable_publishing": false,
+          "allow_symbol_change": true,
+          "container_id": "tradingview-widget-container"
+        }
+        );
+      }
+    }
+  </script>
+</body>
+</html>

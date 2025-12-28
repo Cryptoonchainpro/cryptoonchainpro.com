@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Cryptoonchainpro.com</title>
+  <link rel="shortcut icon" href="./img/Logo.jpg" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'stock-green': '#10B981',
+            'stock-red': '#EF4444',
+            'dark-green': '#065f46',
+            'dark-red': '#7f1d1d'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .header-bg {
+      background: linear-gradient(90deg, #1e3a8a, #0f172a);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .dollar-sign::before {
+      content: "$";
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+      
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(30, 58, 138, 0.3);
+      border: 1px solid #374151;
+      border-radius: 0.5rem;
+      color: rgb(255, 255, 255);
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: #010027;
+    }
+    .btn-trade {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-payment {
+      background-color: #1900fc;
+      color: white;
+    }
+    .btn-payment:hover {
+      background-color: #000c41;
+    }
+    .btn-back {
+      background-color: #6b7280;
+      color: white;
+    }
+    .btn-back:hover {
+      background-color: #4b5563;
+    }
+   
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen">
+  <!-- Header -->
+  <header class="header-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <img src="img/Logo.jpg" width="50" height="50" alt="">
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            Cryptoonchainpro.com — Invest with Confidence
+          </h1>
+        </div>
+        <a href="checkout.html" class="text-blue-400 hover:text-blue-300">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Checkout
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h2 class="text-3xl font-bold text-center mb-8">Payment</h2>
+    
+    <div class="bg-gradient-to-r from-emerald-900/30 to-teal-900/30 backdrop-blur-sm rounded-xl p-6 mb-8 border border-emerald-500/30">
+      <div class="form-group">
+        <label class="form-label">Payment Method</label>
+        <select id="paymentMethod" class="form-input">
+          <option value="upi">UPI</option>
+          <option value="netbanking">Net Banking</option>
+          <option value="debit">Debit Card</option>
+          <option value="credit">Credit Card</option>
+        </select>
+      </div>
+      
+      <div id="paymentDetails">
+        <div id="upiSection" class="form-group">
+          <label class="form-label">UPI ID</label>
+          <input type="text" class="form-input" placeholder="yourname@upi">
+        </div>
+      </div>
+      
+      <button id="payNowBtn" class="btn-trade btn-payment">Pay Now</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('payNowBtn').addEventListener('click', function() {
+      alert('Payment processed successfully! Your order has been placed.');
+      window.location.href = 'portfolio.html';
+    });
+    
+    // Show/hide payment details based on selection
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+      const method = this.value;
+      const details = document.getElementById('paymentDetails');
+      
+      details.innerHTML = '';
+      
+      if (method === 'upi') {
+        details.innerHTML = `
+          <div id="upiSection" class="form-group">
+            <label class="form-label">UPI ID</label>
+            <input type="text" class="form-input" placeholder="yourname@upi">
+          </div>
+        `;
+      } else if (method === 'netbanking') {
+        details.innerHTML = `
+          <div id="netbankingSection" class="form-group">
+            <label class="form-label">Bank</label>
+            <select class="form-input">
+              <option value="">Select Bank</option>
+              <option value="sbi">State Bank of India</option>
+              <option value="hdfc">HDFC Bank</option>
+              <option value="icici">ICICI Bank</option>
+              <option value="axis">Axis Bank</option>
+            </select>
+          </div>
+        `;
+      } else if (method === 'debit' || method === 'credit') {
+        details.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-group">
+              <label class="form-label">Card Number</label>
+              <input type="text" class="form-input" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Expiry Date</label>
+              <input type="text" class="form-input" placeholder="MM/YY">
+            </div>
+            <div class="form-group">
+              <label class="form-label">CVV</label>
+              <input type="password" class="form-input" placeholder="123">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cardholder Name</label>
+              <input type="text" class="form-input" placeholder="John Doe">
+            </div>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
